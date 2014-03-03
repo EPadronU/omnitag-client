@@ -1,0 +1,268 @@
+a, a:focus, a:hover {
+    text-decoration: none;
+}
+body {
+    background: #F2F2F2;
+    font-family: "Pt Sans", Arial;
+    margin: 0;
+}
+#index-form {
+    border-radius: 8px;
+    box-shadow: 1px 1px 5px #2A7FFF;
+    margin: 1em auto;
+    padding: 0.5em 1em;
+    max-width: 450px;
+    text-align: center;
+    width: 96%;
+}
+#index-form form input {
+    border: 1px solid grey;
+    border-radius: 5px;
+    max-width: 250px;
+    width: 100%;
+}
+#index-form form input:focus {
+    box-shadow: 1px 1px 5px #2A7FFF;
+}
+#index-form form label {
+    padding: 0 0.5em;
+}
+#index-form form .form-group {
+    margin-bottom: 2px;
+}
+#explorer .modal-dialog .modal-content {
+    background: #FAFAFA;
+}
+#explorer .modal-dialog .modal-content .modal-body table tbody tr .dir {
+    padding: 0;
+}
+#explorer .modal-dialog .modal-content .modal-body table tbody tr .dir a {
+    display: block;
+    padding: 0.5em;
+}
+#explorer .modal-dialog .modal-content .modal-body table tbody tr .dir a:hover {
+    background: #2A7FFF;
+    color: white;
+}
+#explorer .modal-dialog .modal-content .modal-body table thead tr th {
+    color: #3771C8;
+    font-style: italic;
+    text-align: center;
+}
+#explorer .modal-dialog .modal-content .modal-header {
+    background: #CCC;
+}
+#explorer .modal-dialog .modal-content .modal-header .modal-title {
+    color: #333;
+    font-family: Lobster;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-align: center;
+}
+#page-footer {
+    background: #373E48;
+    color: white;
+    font-size: 0.9em;
+    padding: 0.5em 0;
+    text-align: center;
+    width: 100%;
+}
+#page-footer p {
+    margin: 0;
+}
+#page-header {
+    background: #373E48;
+    margin: 0;
+    padding: 0.5em 2em 0 2em;
+}
+#page-header h1 {
+    background: #3771C8;
+    border-radius: 5px 5px 0 0;
+    color: white;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0 auto;
+    max-width: 120px;
+    padding: 0.2em;
+    text-align: center;
+}
+#page-header #avatar {
+    padding: 0.5em 1em 0 0;
+}
+#page-header #avatar figure {
+    float: right;
+}
+#page-header #avatar figure img {
+    width: 70px;
+}
+#page-header #avatar figure #account-options {
+    background: #3771C8;
+    border-radius: 0 0 2px 2px;
+}
+#page-header #avatar figure #account-options > a {
+    color: #E4ECF7;
+    display: block;
+    line-height: 15px;
+    text-align: center;
+}
+#page-header #avatar figure #account-options > a:before {
+    content: "\f0d7";
+    font-family: icomoon;
+    opacity: 0.9;
+}
+#page-header #avatar figure #account-options .dropdown-menu {
+    background: #535D6C;
+    left: -10px;
+    margin: 0.5em 0 0 0;
+    min-width: 0;
+    padding: 0;
+    text-align: center;
+    width: 90px;
+}
+#page-header #avatar figure #account-options .dropdown-menu li {
+    color: white;
+    display: block;
+    font-size: 0.8em;
+    font-weight: bold;
+    padding: 0.2em 0;
+}
+#page-header #avatar figure #account-options .dropdown-menu li a {
+    color: white;
+}
+#page-header #avatar figure #account-options .dropdown-menu li a:hover {
+    background: #3771C8;
+}
+#page-header #isologotype {
+    padding: 1em 0 0 1em;
+}
+#page-header #isologotype a {
+    color: #D3DADC;
+    font-family: Lobster;
+    font-size: 28px;
+}
+#page-header #isologotype a:before {
+    color: #2A7FFF;
+    content: "\e001";
+    font-family: icomoon;
+    font-size: 30px;
+    left: -2px;
+    position: relative;
+    top: 3px;
+}
+#page-nav .nav li {
+    background: #535D6C;
+    border-color: #535D6C;
+}
+#page-nav .nav li a {
+    color: #E2EDFF;
+    font-weight: bold;
+}
+#page-nav .nav li a:hover,
+#page-nav .nav li.active a {
+    color: #333;
+}
+.add-button p {
+    margin: 0;
+}
+.tab-content {
+    background: white;
+    border: 1px solid #CCC;
+    border-radius: 10px;
+    margin: 1em auto;
+    text-align: center;
+    width: 98%;
+}
+.tab-content #black-list,
+.tab-content #white-list {
+    position: relative;
+}
+.tab-content #black-list table tbody tr td a:before,
+.tab-content #white-list table tbody tr td a:before,
+.tab-content #black-list table thead tr th:first-child:before,
+.tab-content #white-list table thead tr th:first-child:before {
+    content: "\e008";
+    font-family: icomoon;
+}
+.tab-content #black-list table thead tr th,
+.tab-content #white-list table thead tr th {
+    text-align: center;
+}
+.tab-content #settings {
+    padding: 0 0.5em;
+}
+.tab-content #settings form div {
+    background: #BBB;
+    border: 1px solid #666;
+    border-radius: 5px;
+    margin: 1em auto 1.5em auto;
+    padding: 0 0 0.5em 0;
+    position: relative;
+    text-align: center;
+}
+.tab-content #settings form div h3 {
+    background: #474E58;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px white;
+    color: white;
+    font-size: 1em;
+    font-weight: bold;
+    margin: 0 auto;
+    padding: 0.2em;
+    position: relative;
+    text-align: center;
+    top: -0.6em;
+    width: 80%;
+}
+.tab-content #settings form div input {
+    text-align: center;
+}
+.tab-content #settings form div input[type="text"] {
+    background: white;
+    border: 1px #666 solid;
+    border-radius: 5px;
+    color: #333;
+}
+.tab-content #settings form div label {
+    display: inline-block;
+    margin: 0.5em 1em;
+}
+.tab-content #settings form input[type="submit"] {
+    background: #2A7FFF;
+    border: 1px solid #333;
+    border-radius: 6px;
+    box-shadow: 1px 1px 0.5px grey;
+    color: white;
+    display: block;
+    margin: 0.5em auto;
+    width: 80px;
+}
+.tab-content #settings .errors p {
+    background: #CC0000;
+    border-radius: 5px;
+    color: white;
+    font-size: 0.9em;
+    opacity: 0.9;
+    padding: 0.4em;
+    text-align: left;
+}
+.tab-content .tab-pane .add-button {
+    background: #5599FF;
+    border-radius: 0 3px 0 15px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 20;
+}
+.tab-content .tab-pane .add-button a {
+    color: #E7E9EB;
+    display: block;
+    font-size: 2em;
+    line-height: 1.5em;
+    opacity: 0.9;
+    text-align: center;
+    width: 40px;
+}
+.tab-content .tab-pane .add-button a:before {
+    content: "\e006";
+    font-family: icomoon;
+}

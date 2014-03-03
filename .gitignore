@@ -1,0 +1,11 @@
+## Virtual Environment ##
+.venv/
+
+## Python Compiled Files ##
+*.py[co]
+
+## Rope ##
+.ropeproject/
+
+## Config ##
+.config/

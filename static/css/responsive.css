@@ -1,0 +1,7 @@
+@media (min-width: 768px) {
+    .tab-content {
+        padding: 1em;
+        border-radius: 10px;
+        width: 72%;
+    }
+}

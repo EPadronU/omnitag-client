@@ -1,0 +1,160 @@
+{% extends "main-view.html" %}
+
+{% block title %} OmniTag {% endblock %}
+
+{% block h1 %} Crawler {% endblock %}
+
+{% block header  %}
+    <div id="avatar" class="col-xs-4">
+        <figure>
+            <img src="/static/img/avatar.jpg" alt="User's avatar" />
+
+            <figcaption id="account-options" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"> </a>
+
+                <ul class="dropdown-menu" role="menu">
+                    <li role="presentation"><a id="logout" role="menuitem" tabindex="-1" href="#">Log out</a></li>
+                </ul>
+            </figcaption>
+        </figure>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <nav id="page-nav">
+        <ul class="nav nav-tabs nav-justified">
+            <li class="active"><a data-toggle="tab" href="#settings">Settings</a></li>
+            <li><a data-toggle="tab" href="#white-list">White list</a></li>
+            <li><a data-toggle="tab" href="#black-list">Black list</a></li>
+        </ul>
+    </nav>
+
+    <section class="tab-content">
+        <article id="settings" class="tab-pane active">
+            <div class="errors">
+                {% for error in errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <form action="#" method="POST" accept-charset="utf-8">
+                <div id="tokesn">
+                    <h3>Tokens</h3>
+
+                    <label>
+                        User
+                        <input type="text" name="user-token" id="user-token" value="{{ settings['user-token'] }}" />
+                    </label>
+
+                    <label>
+                        Device
+                        <input type="text" name="device-token" id="device-token" value="{{ settings['device-token'] }}" />
+                    </label>
+                </div>
+
+                <div id="network">
+                    <h3>Network</h3>
+
+                    <label>
+                        Client
+                        <input type="text" name="client" id="client" value="{{ settings['client'] }}" />
+                    </label>
+
+                    <label>
+                        Server
+                        <input type="text" name="server" id="server" value="{{ settings['server'] }}" />
+                    </label>
+                </div>
+
+                <div id="sync-backup">
+                    <h3>Backup &amp; Sync</h3>
+
+                    <label>
+                        Backup each
+                        <select name="backup-interval" id="backup-interval">
+                            {% for interval in settings['backup']['intervals'] %}
+                                {% if interval[1] == settings['backup']['interval'] %}
+                                    <option value="{{ interval[1] }}" selected>{{ interval[0] }}</option>
+                                {% else %}
+                                    <option value="{{ interval[1] }}">{{ interval[0] }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </label>
+
+                    <label>
+                        Sync each
+                        <select name="sync-interval" id="sync-interval">
+                            {% for interval in settings['sync']['intervals'] %}
+                                {% if interval[1] == settings['sync']['interval'] %}
+                                    <option value="{{ interval[1] }}" selected>{{ interval[0] }}</option>
+                                {% else %}
+                                    <option value="{{ interval[1] }}">{{ interval[0] }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </label>
+                </div>
+
+                <div>
+                    <input type="submit" name="update-settings" id="update-settings" value="Update" />
+                </div>
+            </form>
+        </article>
+
+        <article class="tab-pane fade" id="white-list">
+            <div class="add-button">
+                <p><a data-toggle="modal" href="#explorer"> </a></p>
+            </div>
+
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th> </th>
+                        <th>Path</th>
+                    </tr>
+                </thead>
+
+                <tbody> </tbody>
+            </table>
+        </article>
+
+        <article class="tab-pane fade" id="black-list">
+            <div class="add-button">
+                <p><a data-toggle="modal" href="#explorer"> </a></p>
+            </div>
+
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th> </th>
+                        <th>Path</th>
+                    </tr>
+                </thead>
+
+                <tbody> </tbody>
+            </table>
+        </article>
+    </section>
+{% endblock %}
+
+{% block extras %}
+    <!-- Modal -->
+    <div id="explorer" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close mycls" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Explorer</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered table-striped table-responsive"> </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary save">Accept</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+{% endblock %}

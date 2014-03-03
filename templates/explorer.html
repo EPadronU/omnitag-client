@@ -1,0 +1,17 @@
+<thead>
+    <tr>
+        <th data-path="{{ dirpath }}">{{ dirname }}</th>
+    </tr>
+</thead>
+
+<tbody>
+    <tr>
+        <td class="dir"><a data-path="{{ parent }}" href="#">..</a></td>
+    </tr>
+
+    {% for dirpath, dirname in directories %}
+        <tr>
+            <td class="dir"><a data-path="{{ dirpath }}" href="#">{{ dirname }}</a></td>
+        </tr>
+    {% endfor %}
+</tbody>
