@@ -71,8 +71,34 @@ class SettingsForm(object):
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+#~ Functions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+def delete_from_list(dirpath, dirlist):
+    assert isinstance(dirpath, str) or isinstance(dirpath, unicode)
+    assert isinstance(dirlist, set)
+
+    if dirpath and dirpath in dirlist:
+        dirlist.remove(dirpath)
+        return '', 200
+
+    return '', 204
+
+
+def render_list(dirlist):
+    assert isinstance(dirlist, set)
+
+    return jsonify({'html': render_template('entries.html', entries=dirlist)})
+
+
+def shutdown_server():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 #~ Controllers ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-@app.route("/", methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
         form = SettingsForm(request)
@@ -83,94 +109,78 @@ def index():
     return render_template('index.html', settings=manager.get('settings'))
 
 
-@app.route("/black-list", methods=['GET'])
+@app.route('/black-list', methods=['GET'])
 def render_black_list_entries():
-    return jsonify({
-        'html': render_template("entries.html", entries=enumerate(manager.get('black-list'))),
-    })
+    return render_list(manager.get('black-list'))
 
 
-@app.route("/black-list", methods=['POST'])
+@app.route('/black-list', methods=['POST'])
 def new_black_list_entry():
-    path = request.get_json().get('path', '')
+    dirpath = request.get_json().get('path')
 
-    if path and manager.add_to_black_list(path):
-        return jsonify({'status': 'success'}), 200
+    if dirpath and manager.add_to_black_list(dirpath):
+        return '', 200
 
-    return jsonify({'status': 'failure'}), 204
+    return '', 204
 
 
-@app.route("/black-list", methods=['DELETE'])
+@app.route('/black-list', methods=['DELETE'])
 def delete_black_list_entry():
-    dirpath = request.get_json().get('entry-path', '')
-
-    if dirpath in manager.get('black-list'):
-        manager.get('black-list').remove(dirpath)
-        return jsonify({'status': 'success'}), 200
-
-    return jsonify({'status': 'failure'}), 204
+    return delete_from_list(request.get_json().get('entry-path'), manager.get('black-list'))
 
 
-@app.route("/explorer", methods=['GET'])
+@app.route('/explorer', methods=['GET'])
 def explorer():
-    path = request.args.get('path', os.path.expanduser(u'~'))
+    current_dir = request.args.get('path', os.path.expanduser(u'~'))
 
-    if os.path.exists(path):
-        dirnames = filter(
-            lambda dirname: os.path.isdir(os.path.join(path, dirname)) and dirname[0] != u'.',
-            os.listdir(path)
-        )
-        dirnames.sort()
+    if os.path.isdir(current_dir):
+        directories = (os.path.join(current_dir, dirname) for dirname in os.listdir(current_dir) if dirname[0] != u'.')
+        directories = filter(lambda dirpath: os.path.isdir(dirpath), directories)
+        directories.sort()
 
         return jsonify({
             'html': render_template(
-                "explorer.html",
-                dirname=os.path.basename(path),
-                dirpath=path,
-                directories=((os.path.join(path, dirname), dirname) for dirname in dirnames),
-                parent=os.path.dirname(path),
+                'explorer.html',
+                dirname=os.path.basename(current_dir),
+                dirpath=current_dir,
+                directories=((dirpath, os.path.basename(dirpath)) for dirpath in directories),
+                parent=os.path.dirname(current_dir),
             ),
             'status': 'success',
         }), 200
 
-    else:
-        return jsonify({
-            'message': 'The given path does not exists',
-            'status': 'failure',
-        }), 404
+    return jsonify({'message': 'The given path does not exists', 'status': 'failure'}), 404
 
 
-@app.route("/white-list", methods=['GET'])
+@app.route('/white-list', methods=['GET'])
 def render_white_list_entries():
-    return jsonify({
-        'html': render_template("entries.html", entries=enumerate(manager.get('white-list'))),
-    })
+    return render_list(manager.get('white-list'))
 
 
-@app.route("/white-list", methods=['POST'])
+@app.route('/white-list', methods=['POST'])
 def new_white_list_entry():
-    path = request.get_json().get('path', '')
+    dirpath = request.get_json().get('path')
 
-    if path and manager.add_to_white_list(path):
-        return jsonify({'status': 'success'}), 200
+    if dirpath and manager.add_to_white_list(dirpath):
+        return '', 200
 
-    return jsonify({'status': 'failure'}), 204
+    return '', 204
 
 
-@app.route("/white-list", methods=['DELETE'])
+@app.route('/white-list', methods=['DELETE'])
 def delete_white_list_entry():
-    dirpath = request.get_json().get('entry-path', '')
+    return delete_from_list(request.get_json().get('entry-path'), manager.get('white-list'))
 
-    if dirpath in manager.get('white-list'):
-        manager.get('white-list').remove(dirpath)
-        return jsonify({'status': 'success'}), 200
 
-    return jsonify({'status': 'failure'}), 204
+@app.route('/shutdown', methods=['GET'])
+def shutdown():
+    shutdown_server()
+    return 'System shutting down...', 200
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 #~ Main ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-if __name__ == "__main__":
+if __name__ == '__main__':
     manager.start_backup_daemon()
     manager.start_sync_daemon()
 

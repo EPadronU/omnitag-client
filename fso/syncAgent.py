@@ -58,8 +58,8 @@ class SyncAgent(object):
         try:
             connection.request(**self.__build_request(new_resources))
 
-        except Exception as e:
-            print("Unable to connect with the server")
+        except Exception as new_exception:
+            raise new_exception
 
         else:
             connection.getresponse().read()
@@ -71,10 +71,6 @@ class SyncAgent(object):
 
 #~ Main ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 if __name__ == '__main__':
-    sync_agent = SyncAgent(
-        'localhost:5000',
-        '2|b66140414104ead8bbb4',
-        '2|b66140414104ead8bbb4',
-    )
-    sync_agent.sync(set())
+    sync_agent = SyncAgent('localhost:5000', '2|b66140414104ead8bbb4', '2|b66140414104ead8bbb4')
+    sync_agent.sync([])
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

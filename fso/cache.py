@@ -66,8 +66,6 @@ class Cache(object):
         self.__dict = {}
 
         self.__load()
-        self.__check_state()
-
         atexit.register(self.dump)
 
     def __get_default_basedir(self):
@@ -75,10 +73,11 @@ class Cache(object):
         if not os.path.exists(basedir): os.mkdir(basedir)
         return basedir
 
-    def __check_state(self):
-        assert isinstance(self.basedir, str)
-        assert isinstance(self.__dict, dict)
+    def __check_all(self):
+        self.__check_state()
+        self.__check_integrity()
 
+    def __check_integrity(self):
         if not os.path.isdir(self.basedir):
             raise AssertionError('The "{0}" path does not point to a directory'.format(self.basedir))
 
@@ -91,7 +90,13 @@ class Cache(object):
                     if key not in self.__dict[fname]:
                         raise AssertionError('The cache does not contain the "{0}" property'.format(key))
 
+    def __check_state(self):
+        assert isinstance(self.basedir, str) or isinstance(self.basedir, unicode)
+        assert isinstance(self.__dict, dict)
+
     def __load(self):
+        self.__check_state()
+
         for fname, fproperties in CFG_FILES.iteritems():
             fpath = os.path.join(self.basedir, fproperties['filename'])
 
@@ -105,8 +110,10 @@ class Cache(object):
             if isinstance(self.__dict[fname], list):
                 self.__dict[fname] = set(self.__dict[fname])
 
+        self.__check_all()
+
     def dump(self):
-        self.__check_state()
+        self.__check_all()
 
         for fname, fproperties in CFG_FILES.iteritems():
             fpath = os.path.join(self.basedir, fproperties['filename'])
@@ -118,15 +125,15 @@ class Cache(object):
                 else:
                     json.dump(self.__dict[fname], fpointer, indent=4)
 
-        self.__check_state()
+        self.__check_all()
 
     def get(self, fname):
-        self.__check_state()
+        self.__check_all()
         return self.__dict.get(fname)
 
     def set(self, fname, value):
         self.__dict[fname] = value
-        self.__check_state()
+        self.__check_all()
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 

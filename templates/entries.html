@@ -1,7 +1,7 @@
-{% for index, path in entries %}
+{% for dirpath in entries|sort %}
     <tr>
-        <td><a data-path="{{ path }}" href="#"> </a></td>
+        <td><a data-path="{{ dirpath }}" href="#"> </a></td>
 
-        <td>{{ path }}</td>
+        <td>{{ dirpath }}</td>
     </tr>
 {% endfor %}

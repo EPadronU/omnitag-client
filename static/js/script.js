@@ -8,11 +8,11 @@ $(document).ready(function() {
         fetch_list_entries('white-list');
     });
 
-    $("#explorer").on("show.bs.modal", function() {
+    $('#explorer').on('show.bs.modal', function() {
         explorer();
     });
 
-    $("#explorer button.save").click(function() {
+    $('#explorer button.save').click(function() {
         save_data_path(get_active_list_name());
     });
 });
@@ -28,7 +28,7 @@ function delete_entry(list_name) {
         }),
         type: 'DELETE',
         url: list_name
-    }).done(function() {
+    }).success(function() {
         $('nav .nav li a[href="#' + list_name + '"]').click();
     });
 }
@@ -38,14 +38,12 @@ function explorer(path) {
     $.ajax({
         data: {path: path},
         type: 'GET',
-        url: "/explorer"
-    }).done(function(data) {
-        if(data.status === 'success') {
-            $("#explorer .modal-body table").html(data.html);
-            $("#explorer .modal-body table tbody tr .dir a").click(function() {
-                explorer($(this).attr("data-path"));
-            });
-        }
+        url: '/explorer'
+    }).success(function(data) {
+        $('#explorer .modal-body table').html(data.html);
+        $('#explorer .modal-body table tbody tr .dir a').click(function() {
+            explorer($(this).attr("data-path"));
+        });
     });
 }
 
@@ -81,14 +79,9 @@ function save_data_path(list_name) {
         }),
         type: 'POST',
         url: list_name
-    }).done(function(data) {
-        if(data.status === 'success') {
-            $("#explorer").modal("hide");
-            $('nav .nav li a[href="#' + list_name + '"]').click();
-
-        } else {
-            // TODO
-        }
+    }).success(function(data) {
+        $("#explorer").modal("hide");
+        $('nav .nav li a[href="#' + list_name + '"]').click();
     });
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

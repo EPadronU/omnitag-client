@@ -16,10 +16,6 @@ from syncAgent import SyncAgent
 class Manager(object):
     def __init__(self, basedir=None):
         self.cache = Cache(basedir)
-        self.__check_state()
-
-    def __check_state(self):
-        assert isinstance(self.cache, Cache)
 
     def __backup_thread(self):
         while True:
@@ -34,14 +30,18 @@ class Manager(object):
                     self.get('white-list'),
                     self.get('crawled-resources'),
                 ).crawl()
+
                 SyncAgent(
                     self.get('settings')['server'],
                     self.get('settings')['user-token'],
                     self.get('settings')['device-token'],
                 ).sync(list(new_resources))
 
-            except Exception as e:
-                print('[ERROR]: While trying to sync: {0}'.format(e.message))
+            except Exception as new_exception:
+                print('[ERROR]: While trying to sync: {0}'.format(new_exception.message))
+
+            else:
+                self.get('crawled-resources').update(new_resources)
 
             time.sleep(self.get('settings')['sync']['interval'])
 

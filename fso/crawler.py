@@ -47,7 +47,6 @@ class Crawler(object):
                 dirnames[:] = (dirname for dirname in dirnames if self.__crawl_directory(dirname, path))
 
         new_files = crawled_files.difference(self.crawled_files)
-        self.crawled_files.update(crawled_files)
 
         self.__check_state()
         return new_files
@@ -64,5 +63,5 @@ if __name__ == '__main__':
     Crawler.add_to_dirlist(crawler.white_list, '/home/nodxine/InProgress/project-euler')
     Crawler.add_to_dirlist(crawler.black_list, '/home/nodxine/InProgress/project-euler/c')
 
-    for file in sorted(crawler.crawl()): print file
+    for crawled_file in sorted(crawler.crawl()): print crawled_file
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
