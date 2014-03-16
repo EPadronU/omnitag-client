@@ -1,5 +1,5 @@
 #~ manager.py ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# A class for manage the file-system-related operations.
+# Manage the file-system-related operations.
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -38,7 +38,7 @@ class Manager(object):
                 ).sync(list(new_resources))
 
             except Exception as new_exception:
-                print('[ERROR]: While trying to sync: {0}'.format(new_exception.message))
+                print('[ERROR]: When trying to sync: {0}'.format(new_exception.message))
 
             else:
                 self.get('crawled-resources').update(new_resources)

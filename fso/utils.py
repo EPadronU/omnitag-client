@@ -13,16 +13,20 @@ REGEX = {
     'token': r'''
         ^\d+\|\w{20}$
     ''',
+
     'url': r'''
         (^
             (http|https)://                     # Match a protocol
             (\w+\.){1,2}\w{2,3}                 # Match a domain
         $)
-        |(^
+        |
+        (^
             (
                 ((\d{1,3}\.){3}\d{1,3})         # Match a IP
-                |localhost
-            ):[1-9]\d{1,4}                      # Match a port number
+                |
+                localhost
+            )
+            :[1-9]\d{1,4}                       # Match a port number
         $)
     ''',
 }

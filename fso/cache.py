@@ -1,5 +1,5 @@
 #~ cache.py ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Class for manage the configuration-files' cache.
+# Manage the configuration-files' cache.
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -68,11 +68,6 @@ class Cache(object):
         self.__load()
         atexit.register(self.dump)
 
-    def __get_default_basedir(self):
-        basedir = os.path.join(os.path.realpath(os.path.curdir), '.config')
-        if not os.path.exists(basedir): os.mkdir(basedir)
-        return basedir
-
     def __check_all(self):
         self.__check_state()
         self.__check_integrity()
@@ -93,6 +88,11 @@ class Cache(object):
     def __check_state(self):
         assert isinstance(self.basedir, str) or isinstance(self.basedir, unicode)
         assert isinstance(self.__dict, dict)
+
+    def __get_default_basedir(self):
+        basedir = os.path.join(os.path.realpath(os.path.curdir), '.config')
+        if not os.path.exists(basedir): os.mkdir(basedir)
+        return basedir
 
     def __load(self):
         self.__check_state()

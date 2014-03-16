@@ -1,5 +1,5 @@
 #~ crawler.py ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Class dedicated to traverse the users' file system, collecting those files that will be tagged.
+# Traverse the users' file system, collecting those files that will be tagged.
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -12,6 +12,7 @@ import os
 class Crawler(object):
     @classmethod
     def add_to_dirlist(cls, dirlist, directory):
+        assert isinstance(dirlist, set)
         assert isinstance(directory, str) or isinstance(directory, unicode)
 
         if directory and os.path.isdir(directory):
@@ -24,6 +25,7 @@ class Crawler(object):
         self.black_list = black_list or set()
         self.white_list = white_list or set()
         self.crawled_files = crawled_files or set()
+
         self.__check_state()
 
     def __check_state(self):
@@ -49,6 +51,7 @@ class Crawler(object):
         new_files = crawled_files.difference(self.crawled_files)
 
         self.__check_state()
+
         return new_files
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -1,5 +1,5 @@
 #~ syncAgent.py ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Class that stablish a connection with the server providing the crawled files.
+# Stablish a connection with the server providing it the crawled files.
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -71,6 +71,6 @@ class SyncAgent(object):
 
 #~ Main ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 if __name__ == '__main__':
-    sync_agent = SyncAgent('localhost:5000', '2|b66140414104ead8bbb4', '2|b66140414104ead8bbb4')
+    sync_agent = SyncAgent('https://omnitag.herokuapp.com', '2|b66140414104ead8bbb4', '2|b66140414104ead8bbb4')
     sync_agent.sync([])
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
