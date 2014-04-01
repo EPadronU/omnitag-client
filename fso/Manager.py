@@ -5,6 +5,7 @@
 
 # ~~ Modules ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 import time
+from AutoTagger import AutoTagger
 from Cache import Cache
 from Crawler import Crawler
 from DaemonThread import DaemonThread
@@ -25,23 +26,25 @@ class Manager(object):
     def __sync_thread(self):
         while True:
             try:
-                new_resources = Crawler(
-                    self.get('black-list'),
-                    self.get('white-list'),
-                    self.get('crawled-resources'),
-                ).crawl()
+                resources_tags = AutoTagger(self.get('auto-tags')).process(
+                    Crawler(
+                        self.get('black-list'),
+                        self.get('white-list'),
+                        self.get('crawled-resources'),
+                    ).crawl()
+                )
 
                 SyncAgent(
                     self.get('settings')['server'],
                     self.get('settings')['user-token'],
                     self.get('settings')['device-token'],
-                ).sync(list(new_resources))
+                ).sync(resources_tags)
 
             except Exception as new_exception:
                 print('[ERROR]: When trying to sync: {0}'.format(new_exception.message))
 
             else:
-                self.get('crawled-resources').update(new_resources)
+                self.get('crawled-resources').update(set(resource for resource, _ in resources_tags))
 
             time.sleep(self.get('settings')['sync']['interval'])
 
