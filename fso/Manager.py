@@ -17,6 +17,7 @@ from SyncAgent import SyncAgent
 class Manager(object):
     def __init__(self, basedir=None):
         self.cache = Cache(basedir)
+        self.auto_tagger = AutoTagger(self.get('auto-tags'))
 
     def __backup_thread(self):
         while True:
@@ -26,7 +27,7 @@ class Manager(object):
     def __sync_thread(self):
         while True:
             try:
-                resources_tags = AutoTagger(self.get('auto-tags')).process(
+                resources_tags = self.auto_tagger.process(
                     Crawler(
                         self.get('black-list'),
                         self.get('white-list'),
